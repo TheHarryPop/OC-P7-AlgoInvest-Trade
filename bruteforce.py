@@ -1,10 +1,10 @@
 import csv
-from itertools import combinations, permutations
+from itertools import combinations
 
 MAX_COST = 500
 
 
-def sort_actions():
+def set_actions():
     actions = []
     csvfile = csv.DictReader(open('actions.csv'))
     for row in csvfile:
@@ -39,5 +39,5 @@ def make_combination(actions):
 
 
 if __name__ == '__main__':
-    actions_list = sort_actions()
+    actions_list = set_actions()
     make_combination(actions_list)
