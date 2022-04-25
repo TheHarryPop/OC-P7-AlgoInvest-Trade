@@ -1,5 +1,5 @@
 import csv
-from itertools import combinations
+from itertools import combinations as itercombi
 
 MAX_COST = 500
 
@@ -13,31 +13,45 @@ def set_actions():
     return actions
 
 
-def make_combination(actions):
+def iter_combinations(actions):
 
-    best_profit = 0
-    best_combination = None
-    best_cost = 0
+    total_combinations = []
 
     for i in range(len(actions)):
-        for combination in combinations(actions, i + 1):
-            cost = 0
-            profit = 0
+        combi = itercombi(actions, i)
+        for comb in combi:
+            total_combinations.append(comb)
+    return total_combinations
 
-            for action in combination:
-                cost += int(action[1])
-                profit += int(action[2])
 
-            if cost <= MAX_COST and profit > best_profit:
-                best_cost = cost
-                best_combination = combination
-                best_profit = profit
+def make_valide_comb(total_combinaisons, max_cost):
+    combinaisons_valides = []
+    for combi in total_combinaisons:
+        combi_cost = 0
+        combi_profit = 0
+        for i in range(len(combi)):
+            combi_cost += combi[i][1]
+            combi_profit += combi[i][2]
+        if combi_cost <= max_cost:
+            combinaisons_valides.append((combi, combi_cost, combi_profit))
+    print(f"len combi valides:{len(combinaisons_valides)}")
+    return combinaisons_valides
 
-    print(f"best_combination: {best_combination}")
-    print(f"best_profit: {best_profit}€")
-    print(f"best_cost: {best_cost}€")
+
+def optimal_combination(valides_combinaisons):
+    optimale_solution = None
+    max_profit = 0
+    max_cost = 0
+    for combi in valides_combinaisons:
+        if combi[2] > max_profit:
+            max_profit = combi[2]
+            max_cost = combi[1]
+            optimale_solution = combi[0]
+    print(f"La combinaison optimale est {optimale_solution}")
+    print(f"le profit maximum est de {max_profit}€")
+    print(f"l'investissement est de {max_cost}€")
 
 
 if __name__ == '__main__':
-    actions_list = set_actions()
-    make_combination(actions_list)
+    combinations = iter_combinations(set_actions())
+    optimal_combination(make_valide_comb(combinations, MAX_COST))
