@@ -1,4 +1,5 @@
 import csv
+import time
 
 MAX_COST = 500
 
@@ -7,7 +8,7 @@ def set_actions():
     actions = []
     csvfile = csv.DictReader(open('actions.csv'))
     for row in csvfile:
-        action = (row['name'], int(row['cost']), (int(row['profit']) * 0.01) * int(row['cost']))
+        action = (row['name'], int(row['price']), (int(row['profit']) * 0.01) * int(row['price']))
         actions.append(action)
     return actions
 
@@ -35,13 +36,16 @@ def knapsack_dynamique(max_cost, actions):
 
         n -= 1
 
-    print(f"best_profit: {matrice[-1][-1]}€")
-    print(f"best_combination: {actions_selection}")
-    print(f"best_cost: {MAX_COST - w}€")
+    print('Résultat optimized :')
+    print(f"La combinaison optimale est {actions_selection}")
+    print(f"Le profit maximum est de {matrice[-1][-1]}€ pour un investissement est de {MAX_COST - w}€")
 
     return matrice[-1][-1], actions_selection
 
 
 if __name__ == '__main__':
+    start = time.time()
     actions_list = set_actions()
     knapsack_dynamique(MAX_COST, actions_list)
+    end = time.time()
+    print(f"Execution time : {end - start} seconds")
