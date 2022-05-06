@@ -15,9 +15,7 @@ def set_actions():
 
 
 def iter_combinations(actions):
-
     total_combinations = []
-
     for i in range(len(actions)):
         combi = itercombi(actions, i)
         for comb in combi:
