@@ -112,4 +112,4 @@ if __name__ == '__main__':
     else:
         knapsack_dynamique_dixieme(MAX_COST * 10, actions_list)
     end = time.time()
-    print(f"Execution time : {round(end - start, 2)} seconds")
+    print(f"Execution time : {round(end - start, 3)} seconds")
